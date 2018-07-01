@@ -13,30 +13,31 @@ const gulp = require('gulp'),
     gulplog = require('gulplog'),
     //accessory
     combine = require('stream-combiner2').obj,
-    gulpIf = require('gulp-if');
+    gulpIf = require('gulp-if'),
     newer = require('gulp-newer');
 
 const config = {
     html: {
-        src: "",
-        dest: "",
-        watch: "",
+        src: "src/index.html",
+        dest: "index.html",
+        watch: "src/chunk/**/*.*",
     },
     styles: {
-        src: "",
-        dest: "",
-        watch: "",
+        src: "src/css/*.css",
+        dest: "css/",
+        watch: "src/css/**/*.*",
     },
     scripts: {
-        src: "",
-        dest: "",
-        watch: "",
+        src: "src/js/**/*.*",
+        dest: "js/",
+        watch: "src/js/**/*.*",
     },
     assets: {
         src: "",
         dest: "",
         watch: "",
-    }
+    },
+    clean: ["css/*", "js/*", "index.html"],
 };
 
 
@@ -45,7 +46,9 @@ var isDev = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 
 /* clean dist folder */
 gulp.task('clear', function(callback) {
-    return del(path.clean);
+    return del(config.clean).then(paths => {
+    console.log('Deleted files and folders:\n', paths.join('\n'));
+});;
 });
 
 /* compile html from partial */
@@ -59,7 +62,7 @@ gulp.task('html', function(callback) {
                 title: 'HTML Error',
                 message: error.message
             };
-        }))); // show message if error
+        })); // show message if error
 });
 
 gulp.task('styles', function(callback) {
@@ -69,20 +72,18 @@ gulp.task('styles', function(callback) {
         rigger(), // or any CSS preprocessors
         prefixer(), // add browser prefixes
         gulpIf(isDev, sourcemaps.write()), // write sourcemap if development
-        gulp.dest(confin.styles.dest))
+        gulp.dest(config.styles.dest))
         .on('error', notify.onError(function(error) {
             return {
                 title: 'Styles Error',
                 message: error.message
             };
         }));
-    );
 });
 
 gulp.task('scripts', function(callback) {
     return gulp.src(config.scripts.src, {since: gulp.lastRun('assets')})
-        .pipe(gulp.dest(confin.styles.dest))   
-    );
+        .pipe(gulp.dest(config.scripts.dest));
 });
 
 gulp.task('assets', function(callback) {
