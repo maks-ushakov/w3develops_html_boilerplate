@@ -19,7 +19,7 @@ const gulp = require('gulp'),
 const config = {
     html: {
         src: "src/index.html",
-        dest: "index.html",
+        dest: "./",
         watch: "src/chunk/**/*.*",
     },
     styles: {
