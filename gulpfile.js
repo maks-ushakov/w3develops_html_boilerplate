@@ -15,6 +15,7 @@ const gulp = require('gulp'),
     combine = require('stream-combiner2').obj,
     gulpIf = require('gulp-if'),
     newer = require('gulp-newer');
+const browserSync = require('browser-sync').create();
 
 const config = {
     html: {
@@ -38,6 +39,10 @@ const config = {
         watch: "",
     },
     clean: ["css/*", "js/*", "index.html"],
+    server: {
+		src: ".",
+		watch: ["./**/*.html", "./css/**/*.*", "./js/**/*.*", "./fonts/**/*.*", "./images/**/*.*"],
+	},
 };
 
 
@@ -99,7 +104,16 @@ gulp.task('watch', function() {
   //  gulp.watch(config.assets.watch, gulp.series('assets'));
 });
 
-
 gulp.task('build', gulp.series('clear', gulp.parallel('html', 'styles', 'scripts')));
 
-gulp.task('default', gulp.series('build'));
+gulp.task('serve', function() {
+	browserSync.init({
+		server: config.server.src
+	});
+	browserSync.watch(config.server.watch).on('change', browserSync.reload);
+});
+
+gulp.task('dev',
+			gulp.series('build', gulp.parallel('watch', 'serve')));
+
+gulp.task('default', gulp.series('dev'));
