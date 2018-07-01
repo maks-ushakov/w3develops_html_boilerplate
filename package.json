@@ -1,0 +1,38 @@
+{
+  "name": "w3develops_html_boilerplate",
+  "version": "0.1.0",
+  "description": "Starter KIT for team collaborating for HTML project on W3Develops code session",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maks-ushakov/w3develops_html_boilerplate.git"
+  },
+  "keywords": [
+    "collaborating",
+    "boilerplate",
+    "w3develops",
+    "html",
+    "css"
+  ],
+  "author": "Maks Ushakov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maks-ushakov/w3develops_html_boilerplate/issues"
+  },
+  "homepage": "https://github.com/maks-ushakov/w3develops_html_boilerplate#readme",
+  "devDependencies": {
+    "browser-sync": "^2.24.5",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-watch": "^5.0.0",
+    "stream-combiner2": "^1.1.1"
+  }
+}
